@@ -1,3 +1,26 @@
 body {
-    
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 20px;
+    margin: 0;
 }
+
+.table {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+
+
+.place-bet {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.bet-input {
+    margin-top: 5px;
+}
+
