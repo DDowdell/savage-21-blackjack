@@ -24,8 +24,7 @@ let dealerHand = [];
 let playerScore = 0;
 let dealerScore = 0;
 let deck = [];
-let cards = [];
-let gameState = 'waiting';
+// let gameState = 'waiting';
 let currentBet = 0;
 
 /*----- Cached Element References  -----*/
@@ -36,12 +35,13 @@ const startButton = document.querySelector(".start-button")
 
 /*-------------- Functions -------------*/
 function startGame() {
-    const deck = shuffleDeck();
+    // const deck = shuffleDeck();
 }
 
 function shuffleDeck() {
-    for (let value of cardValues) {
-        cards.push(value);
+    const cards = [];
+    for (let card of cardValues) {
+        cards.push(card[0]);
     }
     //Fisher-Yates shuffle algorithm info sourced from google search
     for (let i = cards.length - 1; i > 0; i--) {
@@ -50,8 +50,8 @@ function shuffleDeck() {
     }
     return cards; // shuffled deck
 }
-// shuffleDeck()
-console.log(cards)
+shuffleDeck();
+// console.log(cards);
 
 
 playerHand.push(deck.pop(), deck.pop());
