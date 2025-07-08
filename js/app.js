@@ -34,13 +34,10 @@ const placeBet = document.querySelector(".place-bet");
 const startButton = document.querySelector(".start-button")
 
 /*-------------- Functions -------------*/
-function startGame() {
-    // const deck = shuffleDeck();
-}
 
 function shuffleDeck() {
     const cards = [];
-    for (let card of cardValues) {
+    for (const card of cardValues) {
         cards.push(card[0]);
     }
     //Fisher-Yates shuffle algorithm info sourced from google search
@@ -50,19 +47,30 @@ function shuffleDeck() {
     }
     return cards; // shuffled deck
 }
-shuffleDeck();
+// shuffleDeck();
 // console.log(cards);
 
 
-playerHand.push(deck.pop(), deck.pop());
-dealerHand.push(deck.pop(), deck.pop());
-//dealing two cards each
+
+function dealCards() {
+    playerHand = [deck.pop(), deck.pop()];
+    dealerHand = [deck.pop(), deck.pop()];
+    //dealing two cards each
+    playerScore = countCards(playerHand);
+    dealerScore = countCards(dealerHand);
+}
 console.log("Player's Hand:", playerHand);
 console.log("Dealer's Hand:", dealerHand[0]) //with one card hidden
 
 
+function showHands() { //corrected code using `` instead of + with help from google/AI and .join from MDN
+    playerScoreEl.textContent = `Player Hand: ${playerHand.join(", ")} - Value: ${playerScore}`;
+    dealerScoreEl.textContent = `Dealer Hand: ${dealerHand.join(", ")} - Value: ${dealerScore}`;
+}
+
+
 function getCardValue(cardName) {
-    for (let card of cardValues) {
+    for (card of cardValues) {
         if (card[0] === cardName) {
             return card[1];
         }
@@ -94,11 +102,12 @@ function countCards(hand) { //counting the total value of each hand
 
 const playerCards = countCards(playerHand);
 const dealerCards = countCards(dealerHand);
-//counting and diplaying cards
+// //counting and diplaying cards
 console.log("Player's Cards:", playerCards);
 console.log("Dealer's Cards", dealerCards);
 
-startGame()
+// startGame()
+
 
 /*----------- Event Listeners ----------*/
 function init() {
