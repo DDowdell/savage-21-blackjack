@@ -28,10 +28,30 @@ let gameState = 'waiting';
 let currentBet = 0;
 
 /*----- Cached Element References  -----*/
-
+const playerScoreEl = document.querySelector(".player-score");
+const dealerScoreEl = document.querySelector(".dealer-score");
+const placeBet = document.querySelector(".place-bet");
+const startButton = document.querySelector(".start-button")
 
 /*-------------- Functions -------------*/
+function startGame() {
 
+}
+
+function shuffleDeck() { 
+    let cards = [];
+    for(let value of cardValues) {
+        cards.push(value);
+    }
+    //Fisher-Yates shuffle algorithm info sourced from google search
+    for(let i = cards.length - 1; i > 0; i--) { 
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    return deck; // shuffled deck
+}
 
 /*----------- Event Listeners ----------*/
-
+function init() {
+    startButton.addEventListener("click", )
+}
