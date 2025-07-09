@@ -18,6 +18,9 @@ const cardValues = [
     ["King", 10]
 ];
 
+console.log(maxBet);
+console.log(minBet);
+
 /*---------- Variables (state) ---------*/
 let playerHand = [];
 let dealerHand = [];
@@ -39,7 +42,7 @@ function createDeck() {
     const suits = ['spades', 'hearts', 'diamonds', 'clubs']
     for (const suit of suits) {
         for (const value of cardValues) {
-            let card = `${value[0]} of ${suit}}`; 
+            let card = `${value[0]} of ${suit}}`;
             deck.push(card);
         }
     }
@@ -50,10 +53,6 @@ createDeck();
 
 
 function shuffleDeck() {
-    // let card = [];
-    // for (let card of cardValues) {
-    //     card.push(card[0]);
-    // }
     //Fisher-Yates shuffle algorithm info sourced from google search
     for (let i = deck.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -73,12 +72,11 @@ function dealCards() {
     playerScore = countCards(playerHand);
     dealerScore = countCards(dealerHand);
 }
-console.log("Player's Hand:", playerHand);
-console.log("Dealer's Hand:", dealerHand[0]) //with one card hidden
-
 dealCards();
-console.log(playerHand)
-console.log(dealerHand)
+console.log("Player's Hand:", playerHand);
+console.log("Dealer's Hand:", dealerHand);
+
+// console.log("Dealer's hand with last card hidden:", dealerHand[0]);
 
 
 function showHands() { //corrected code using `` instead of + with help from google/AI and .join from MDN
@@ -132,19 +130,33 @@ const dealerCards = countCards(dealerHand);
 console.log("Player's Cards:", playerCards);
 console.log("Dealer's Cards", dealerCards);
 
-// startGame();
+
+function newGame() {
+
+}
+// newGame();
 
 
 /*----------- Event Listeners ----------*/
 function init() {
-    startButton.addEventListener("click", function() {
+    startButton.addEventListener("click", function () {
         currentBet = Number(placeBet.value);
         if (currentBet >= minBet && currentBet <= maxBet) {
-        shuffleDeck();
-        dealCards();
-        showHands();
+            playerHand = [];
+            dealerHand = [];
+            playerScore = 0;
+            dealerScore = 0;
+            deck = [];
+            // resetting game state
+            createDeck();
+            shuffleDeck();
+            dealCards();
+            showHands();
+        } else {
+            alert("Invalid Bet");
         }
-        console.log();
+        console.log("Dealer has", dealerCards);
+        console.log("Player has", playerCards);
     });
 }
 
