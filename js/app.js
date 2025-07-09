@@ -35,20 +35,34 @@ const startButton = document.querySelector(".start-button")
 
 /*-------------- Functions -------------*/
 
-function shuffleDeck() {
-    const cards = [];
-    for (const card of cardValues) {
-        cards.push(card[0]);
+function createDeck() {
+    const suits = ['spades', 'hearts', 'diamonds', 'clubs']
+    for (const suit of suits) {
+        for (const value of cardValues) {
+            let card = `${value[0]} of ${suit}}`; 
+            deck.push(card);
+        }
     }
-    //Fisher-Yates shuffle algorithm info sourced from google search
-    for (let i = cards.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [cards[i], cards[j]] = [cards[j], cards[i]];
-    }
-    return cards; // shuffled deck
 }
-// shuffleDeck();
-// console.log(cards);
+
+createDeck();
+// console.log(deck);
+
+
+function shuffleDeck() {
+    // let card = [];
+    // for (let card of cardValues) {
+    //     card.push(card[0]);
+    // }
+    //Fisher-Yates shuffle algorithm info sourced from google search
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    return deck; // shuffled deck
+}
+shuffleDeck();
+// console.log(deck);
 
 
 
@@ -62,15 +76,22 @@ function dealCards() {
 console.log("Player's Hand:", playerHand);
 console.log("Dealer's Hand:", dealerHand[0]) //with one card hidden
 
+dealCards();
+console.log(playerHand)
+console.log(dealerHand)
+
 
 function showHands() { //corrected code using `` instead of + with help from google/AI and .join from MDN
     playerScoreEl.textContent = `Player Hand: ${playerHand.join(", ")} - Value: ${playerScore}`;
     dealerScoreEl.textContent = `Dealer Hand: ${dealerHand.join(", ")} - Value: ${dealerScore}`;
 }
 
+// showHands();
+// console.log();
+
 
 function getCardValue(cardName) {
-    for (card of cardValues) {
+    for (let card of cardValues) {
         if (card[0] === cardName) {
             return card[1];
         }
@@ -78,6 +99,8 @@ function getCardValue(cardName) {
     return 0; //if card is not found
 }
 
+// getCardValue();
+// console.log();
 
 function countCards(hand) { //counting the total value of each hand
     let total = 0;
@@ -99,17 +122,30 @@ function countCards(hand) { //counting the total value of each hand
     return total;
 }
 
+// countCards();
+// console.log();
+
 
 const playerCards = countCards(playerHand);
 const dealerCards = countCards(dealerHand);
-// //counting and diplaying cards
+//counting and diplaying cards
 console.log("Player's Cards:", playerCards);
 console.log("Dealer's Cards", dealerCards);
 
-// startGame()
+// startGame();
 
 
 /*----------- Event Listeners ----------*/
 function init() {
-    startButton.addEventListener("click",)
+    startButton.addEventListener("click", function() {
+        currentBet = Number(placeBet.value);
+        if (currentBet >= minBet && currentBet <= maxBet) {
+        shuffleDeck();
+        dealCards();
+        showHands();
+        }
+        console.log();
+    });
 }
+
+init();
