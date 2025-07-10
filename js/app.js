@@ -18,8 +18,8 @@ const cardValues = [
     ["King", 10]
 ];
 
-console.log(maxBet);
-console.log(minBet);
+// console.log(maxBet);
+// console.log(minBet);
 
 /*---------- Variables (state) ---------*/
 let playerHand = [];
@@ -33,10 +33,40 @@ let currentBet = 0;
 /*----- Cached Element References  -----*/
 const playerScoreEl = document.querySelector(".player-score");
 const dealerScoreEl = document.querySelector(".dealer-score");
-const placeBet = document.querySelector(".place-bet");
-const startButton = document.querySelector(".start-button")
+const placeBet = document.querySelector(".place-bet-input");
+const startButton = document.querySelector(".start-button");
+const hitButton = document.querySelector(".hit-button");
+const leaveTable = document.querySelector(".leave-table");
 
 /*-------------- Functions -------------*/
+
+function init() {
+    let currentBet = Number(placeBet.value);
+
+    // console.log(placeBet.value);
+
+    if (currentBet >= minBet && currentBet <= maxBet) {
+        newGame();
+        createDeck();
+        shuffleDeck();
+        dealCards();
+        showHands();
+    } else {
+        return console.log("Invalid Bet");
+    }
+    // console.log("Dealer has", playerHand.value);
+    // console.log("Player has", dealerHand.value);
+};
+
+
+const newGame = () => {
+    playerHand = [];
+    dealerHand = [];
+    playerScore = 0;
+    dealerScore = 0;
+    deck = [];
+}            // resetting game state
+
 
 function createDeck() {
     const suits = ['spades', 'hearts', 'diamonds', 'clubs']
@@ -131,33 +161,58 @@ console.log("Player's Cards:", playerCards);
 console.log("Dealer's Cards", dealerCards);
 
 
-function newGame() {
+//     PlayerTurn
+//         REPEAT
+//             IF player chooses to hit
+//                 (playerHand ADD (DealCard deck)
+//                 (DisplayHand updated playerHand)
+//                 IF playerHand (CalculateScore > 21)
+//                     LOG (player "busts!")
+//                     (RETURN False)
+               
+//         UNTIL player chooses to leave table
+//         (RETURN True)
+    
+  
 
-}
-// newGame();
+//   DealerTurn
+//         REPEAT
+//             (dealerHand ADD (DealCard deck)
+//         UNTIL dealerHand (CalculateScore >= 17)
+//         DisplayHand (updated dealerHand)
+    
+
+//     DetermineWinner (playerScore vs dealerScore)
+//         IF (playerScore > 21)
+//             (RETURN "Dealer wins!")
+        
+//         ELSE IF (or (dealerScore > 21) OR (playerScore >= dealerScore)
+//             (RETURN "Player wins!")
+        
+//         ELSE IF (playerScore < dealerScore)
+//             (RETURN "Dealer wins!")
+        
 
 
 /*----------- Event Listeners ----------*/
-function init() {
-    startButton.addEventListener("click", function () {
-        currentBet = Number(placeBet.value);
-        if (currentBet >= minBet && currentBet <= maxBet) {
-            playerHand = [];
-            dealerHand = [];
-            playerScore = 0;
-            dealerScore = 0;
-            deck = [];
-            // resetting game state
-            createDeck();
-            shuffleDeck();
-            dealCards();
-            showHands();
-        } else {
-            alert("Invalid Bet");
-        }
-        console.log("Dealer has", dealerCards);
-        console.log("Player has", playerCards);
-    });
-}
 
-init();
+startButton.addEventListener(
+    'click', init
+)
+
+newGame();
+
+init()
+
+//=======TempGraveYard=======================
+
+// const handleClick = () => {}
+
+// const render = () => {}
+
+//=======References========================
+
+// https://generalassembly.instructure.com/courses/821/pages/card-game-starter?module_item_id=75327
+// https://www.google.com/search?q=why+wont+my+init+function+reset+my+game+state&rlz=1C5LTRN_enUS1157US1167&sourceid=chrome&ie=UTF-8
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number
+//Fisher-Yates shuffle algorithm info sourced from google search

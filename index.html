@@ -13,13 +13,17 @@
         <h1>Savage 21 BlackJack</h1>
         <h2>"How many cards do you got? (Alot!?)"</h2>
         <div class="scoreboard">
-            <div class="palyer-score">Player Score: 0</div>
+            <div class="player-score">Player Score: 0</div>
             <div class="dealer-score">Dealer Score: 0</div>
         </div>
         <div class="place-bet">
             <p>Place Your Bet!</p>
-            <input type="number" id="bet-amount" class="place-bet" min="10" max="100">
+            <input type="number" id="bet-amount" class="place-bet-input" min="10" max="100">
             <p class="bet-req">Min Bet: 10 Max Bet: 100</p>
+        </div>
+        <div class="hit-leave-table">
+            <button class="hit-button">Hit Me!</button>
+            <button class="leave-table">I'm Out!</button>
         </div>
         <button class="start-button">Let's Go!</button>
     </div>
