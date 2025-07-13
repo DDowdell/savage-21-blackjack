@@ -36,35 +36,24 @@ body {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px;
-}
+    color: black;
+    text-align: center;
 
-/* .bet-input { */
-    /* margin-top: 5px; */
-/* } */
+}
 
 .game-buttons {
     display: flex;
     justify-content: space-around;
     width: 100%;
 }
-/* 
-.message-box {
-    margin-top: 20px;
-    color: red;
-    text-align: center;
-} */
 
 .display-message {
-    position: fixed; /* Position fixed to allow sliding across the screen */
-    top: 20px; /* Distance from the top */
-    left: 50%; /* Start from the center */
-    transform: translateX(-50%); /* Center the message */
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
-    color: red; /* Text color */
-    padding: 10px 20px; /* Padding around the text */
-    border-radius: 5px; /* Rounded corners */
-    opacity: 0; /* Start invisible */
-    transition: opacity 0.5s ease; /* Transition for fading in */
+ margin-top: 20px;
+ color: red;
+ text-align: center;
+ opacity: 0;
+ transition: opacity 0.5s;
+ font-weight: bold;
 }
 
 /* Animation for sliding */
