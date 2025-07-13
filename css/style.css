@@ -2,20 +2,35 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     padding: 20px;
     margin: 0;
-    display: flex;
+    /* display: flex; */
 }
 
 .table {
-    max-width: 400px;
+    display: flex;
+    align-items: center;
+    width: 600px;
     margin: auto;
     padding: 20px;
     border-radius: 10px;
-    display: flex;
     flex-direction: column;
+    background-color: forestgreen;
 }
 
+.score-board {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    color: white;
+}
 
-
+.hands {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+    color: white;
+}
 
 .place-bet {
     display: flex;
@@ -23,7 +38,54 @@ body {
     margin-bottom: 20px;
 }
 
-.bet-input {
-    margin-top: 5px;
+/* .bet-input { */
+    /* margin-top: 5px; */
+/* } */
+
+.game-buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+/* 
+.message-box {
+    margin-top: 20px;
+    color: red;
+    text-align: center;
+} */
+
+.display-message {
+    position: fixed; /* Position fixed to allow sliding across the screen */
+    top: 20px; /* Distance from the top */
+    left: 50%; /* Start from the center */
+    transform: translateX(-50%); /* Center the message */
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    color: red; /* Text color */
+    padding: 10px 20px; /* Padding around the text */
+    border-radius: 5px; /* Rounded corners */
+    opacity: 0; /* Start invisible */
+    transition: opacity 0.5s ease; /* Transition for fading in */
 }
 
+/* Animation for sliding */
+@keyframes slideIn {
+    0% {
+        transform: translateY(-50px); /* Start above the screen */
+        opacity: 0; /* Start invisible */
+    }
+    100% {
+        transform: translateX(-50%); /* End at original position */
+        opacity: 1; /* End visible */
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateY(0); /* Start at original position */
+        opacity: 1; /* Start visible */
+    }
+    100% {
+        transform: translateX(-50%); /* End above the screen */
+        opacity: 0; /* End invisible */
+    }
+}
