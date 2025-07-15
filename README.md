@@ -23,3 +23,9 @@ Resources Used
 
 [Mozilla - translate()](https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate)
 
+Technologies Used: JavaScript, HTML and CSS.
+
+Next Steps:
+1. Correct card flip and slide logic
+2. Add game music by 21Savage
+3. Make more visually appealing (casino style)

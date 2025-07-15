@@ -25,6 +25,7 @@ let playerScore = 0;
 let dealerScore = 0;
 let deck = [];
 let currentBet = 0;
+let playerActive = true;
 
 /*----- Cached Element References  -----*/
 const playerScoreEl = document.querySelector("#player-score");
@@ -32,10 +33,10 @@ const dealerScoreEl = document.querySelector("#dealer-score");
 const playerHandEl = document.querySelector("#player-hand");
 const dealerHandEl = document.querySelector("#dealer-hand");
 const placeBet = document.querySelector(".place-bet-input");
-const startButton = document.querySelector(".start-button");
 const hitButton = document.querySelector(".hit-button");
 const leaveTable = document.querySelector(".leave-table");
 const displayMessage = document.querySelector(".display-message");
+const startButton = document.querySelector(".start-button");
 
 /*-------------- Functions -------------*/
 
@@ -46,13 +47,12 @@ const showMessage = (message) => {
 
     setTimeout(() => {
         displayMessage.style.animation = 'slideOut 0.9s forwards';
-        setTimeout(() => displayMessage.style.opacity = 0, 500); // Hide after animation
+        setTimeout(() => displayMessage.style.opacity = 0, 500);
     }, 3000);
 };
 
 const init = () => {
     currentBet = Number(placeBet.value);
-
     if (currentBet >= minBet && currentBet <= maxBet) {
         newGame();
         createDeck();
@@ -72,6 +72,13 @@ const newGame = () => {
     playerScore = 0;
     dealerScore = 0;
     deck = [];
+    currentBet = '';
+    playerHandEl.innerHTML = '';
+    dealerHandEl.innerHTML = '';
+    playerScoreEl.textContent = '0';
+    dealerScoreEl.textContent = '0';
+    displayMessage.textContent = '';
+    playerActive = true;
 };
 
 const createDeck = () => {
@@ -89,7 +96,6 @@ const shuffleDeck = () => {
         const j = Math.floor(Math.random() * (i + 1));
         [deck[i], deck[j]] = [deck[j], deck[i]];
     }
-    return deck; // shuffled deck
 };
 
 const updateScores = () => {
@@ -104,17 +110,23 @@ const dealCards = () => {
     }
     updateScores();
     showHands();
-
-    if (playerScore === 21) { // Check after dealing
-        showMessage("You have BlackJack!");
-    } else if (dealerScore === 21) {
-        showMessage("Dealer has BlackJack!")
-        return dealerTurn();
-    }
+    checkWinner();
 };
 
 const showHands = () => {
+    playerHandEl.innerHTML = '';
+    dealerHandEl.innerHTML = '';
+
+    playerHand.forEach(card => {
+        const cardElement = createCardElement(card);
+        playerHandEl.appendChild(cardElement);
+    });
     playerScoreEl.textContent = `Player Hand: ${playerHand.join(", ")} - Total: ${playerScore}`;
+
+    dealerHand.forEach(card => {
+        const cardElement = createCardElement(card);
+        dealerHandEl.appendChild(cardElement);
+    });
     dealerScoreEl.textContent = `Dealer Hand: ${dealerHand.join(", ")} - Total: ${dealerScore}`;
 };
 
@@ -124,7 +136,7 @@ const getCardValue = (cardName) => {
             return card[1];
         }
     }
-    return 0; //if card is not found
+    return 0;
 };
 
 const countCards = (hand) => {
@@ -148,55 +160,95 @@ const countCards = (hand) => {
 };
 
 const playerTurn = () => {
+    if (playerActive && playerScore < 21) {
+        showMessage("Hit or Stand?");
+    }
+};
+
+const hit = () => {
     if (playerScore < 21) {
         playerHand.push(deck.pop());
         updateScores();
         showHands();
+        checkWinner();
+    }
+};
 
-        if (playerScore > 21) {
-            console.log("Player Busts!");
-            showMessage("Busted!");
-        } else if (playerScore === 21) {
-            console.log("BlackJack!!!");
-            showMessage("BlackJack!");
-            dealerTurn();
-        } else {
-            showMessage("Hit!?");
-        }
+const stand = () => {
+    if (playerActive) {
+        playerActive = false;
+        dealerTurn();
     }
 };
 
 const dealerTurn = () => {
-    while (dealerScore < 17) {
+    while (dealerScore < 20) {
         dealerHand.push(deck.pop());
         updateScores();
+        showHands();
+        setTimeout(dealerTurn, 1000); // 1 sec card flip delay
+        
+        if (dealerScore > 21) {
+            return;
+        }
     }
-    showHands();
     checkWinner();
 };
 
 const checkWinner = () => {
     if (playerScore > 21) {
-        showMessage("Busted! Dealer Wins!");
+        showMessage("You're Busted! Dealer Wins!");
     } else if (dealerScore > 21) {
-        showMessage("Busted! Player Wins!");
-    } else if (playerScore === 21 && dealerScore === 21) {
-        showMessage("Both have BlackJack! It's a tie!");
+        showMessage("Dealer's Busted! Player Wins!");
     } else if (playerScore === 21) {
-        showMessage("You Win with BlackJack!");
+        showMessage("BlackJack! You Win!!!");
     } else if (dealerScore === 21) {
-        showMessage("Dealer Wins with BlackJack!");
-    } else if (playerScore > dealerScore) {
-        showMessage("You Win!");
-    } else if (playerScore === dealerScore) {
-        showMessage("It's Even!");
+        showMessage("Dealer Has BlackJack! You Lose!");
+    } else if (playerScore === 21 && dealerScore === 21) {
+        showMessage("Both have BlackJack! Pushed!");
+    } else if (playerScore < 21 && dealerScore < 21) {
+        playerTurn();
+    } else if (dealerScore < 21) {
+        if (dealerScore > playerScore) {
+            showMessage("Dealer Wins!");
+        } else if (dealerScore < playerScore) {
+            showMessage("You Win!");
+        } else {
+            showMessage("Pushed!");
+        }
     } else {
-        showMessage("Dealer Wins!");
+        playerTurn();
     }
+};
+
+const createCardElement = (card) => {
+    const cardDiv = document.createElement('div');
+    cardDiv.classList.add('card');
+
+    const [value, suit] = card.split(' of ');
+
+    const cardFront = document.createElement('div');
+    cardFront.classList.add('card-front');
+
+    const cardValue = document.createElement('div');
+    cardValue.classList.add('card-value');
+    cardValue.textContent = value;
+
+    const cardSuit = document.createElement('div');
+    cardSuit.classList.add('card-suit');
+    cardSuit.textContent = suit;
+
+    cardFront.appendChild(cardValue);
+    cardFront.appendChild(cardSuit);
+
+    cardDiv.appendChild(cardFront);
+
+    return cardDiv;
 };
 
 /*----------- Event Listeners ----------*/
 
 startButton.addEventListener('click', init);
-hitButton.addEventListener('click', playerTurn);
-leaveTable.addEventListener('click', dealerTurn);
+hitButton.addEventListener('click', hit);
+leaveTable.addEventListener('click', stand);
+document.querySelector('.reset-button').addEventListener('click', newGame);

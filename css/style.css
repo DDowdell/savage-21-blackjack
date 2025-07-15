@@ -1,19 +1,18 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    padding: 20px;
+    background-color: green;
     margin: 0;
-    /* display: flex; */
+    padding: 20px;
 }
 
 .table {
     display: flex;
+    flex-direction: column;
     align-items: center;
     width: 600px;
     margin: auto;
-    padding: 20px;
     border-radius: 10px;
-    flex-direction: column;
-    background-color: forestgreen;
+    position: relative;
 }
 
 .score-board {
@@ -26,10 +25,19 @@ body {
 
 .hands {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 20px;
     color: white;
+}
+
+.player-hand, .dealer-hand {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .place-bet {
@@ -38,7 +46,6 @@ body {
     margin-bottom: 20px;
     color: black;
     text-align: center;
-
 }
 
 .game-buttons {
@@ -48,12 +55,68 @@ body {
 }
 
 .display-message {
- margin-top: 20px;
- color: red;
- text-align: center;
- opacity: 0;
- transition: opacity 0.5s;
- font-weight: bold;
+    margin-top: 20px;
+    color: red;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+    font-weight: bold;
+}
+
+.game-rules {
+    justify-items: left;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    padding: 10px;
+}
+
+.card {
+    width: 100px;
+    height: 150px;
+    border: 1px solid white;
+    border-radius: 5px;
+    position: relative;
+    margin: 5px;
+}
+
+.card-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px; 
+}
+
+.card-front {
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNCjcPfsdDV9Xbtn-rM04FCi3oEnBxpeA1n1E6LVWtldQav6liwxn8hsc&s');
+    background-size: contain;
+    background-position: center;
+    color: white;
+    position: relative;
+}
+
+.card-value {
+    position: absolute;
+    top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.card-suit {
+    position: absolute;
+    bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 /* Animation for sliding */
@@ -63,7 +126,7 @@ body {
         opacity: 0; /* Start invisible */
     }
     100% {
-        transform: translateX(-50%); /* End at original position */
+        transform: translateY(0); /* End at original position */
         opacity: 1; /* End visible */
     }
 }
@@ -74,7 +137,7 @@ body {
         opacity: 1; /* Start visible */
     }
     100% {
-        transform: translateX(-50%); /* End above the screen */
+        transform: translateY(-50px); /* End above the screen */
         opacity: 0; /* End invisible */
     }
 }

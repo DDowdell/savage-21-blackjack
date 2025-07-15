@@ -23,16 +23,28 @@
             <p class="bet-req">Min Bet: 10 Max Bet: 100</p>
         </div>
         <div class="hands">
-            <div class="player-hand">Your Hand: <span id="player-hand"></span></div>
-            <div class="dealer-hand">Dealer's Hand: <span id="dealer-hand"></span></div>
+            <div class="player-hand">Your Hand: <div id="player-hand" class="hand"></div>
+            </div>
+            <div class="dealer-hand">Dealer's Hand: <div id="dealer-hand" class="hand"></div>
+            </div>
         </div>
         <div class="game-buttons">
             <button class="hit-button">Hit Me!</button>
-            <button class="leave-table">I'm Out!</button>
+            <button class="leave-table">Let Stand!</button>
         </div>
         <button class="start-button">Let's Go!</button>
+        <button class="reset-button">New Game!</button>
         <div class="display-message"></div>
     </div>
+    <p class="game-rules">How to Play Blackjack:
+1. Place your bet: Before the cards are dealt, players must place a bet. The minimum and maximum bets are usually posted on the table.
+2. Receive your cards: Once all bets have been placed, the dealer will deal two cards to each player, face up.
+3. Decide to hit or stand: After receiving your two cards, you can choose to "hit" and receive additional cards or "stand" and keep your
+current hand.
+4. Dealer's turn: After all players have had their turn, the dealer will reveal their face-down card and hit or stand according to
+predetermined rules.
+5. Determine the winner: If neither the player nor the dealer busts, the person with the highest
+Value wins.</p>
 </body>
 
 </html>
